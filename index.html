@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>basket Page</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+</head>
+
+<body id="body-tag">
+    <nav id="header">
+        <p id="title"> <i class="fa fa-mobile-phone"></i> Cell Phone Shop</p>
+        <div id="icons">
+            <i class="fa fa-user" style=" margin-top: 6px;"></i>
+            <i class="fa fa-shopping-basket" id="open-basket" style="font-size: 30px; margin-top: 7px;">
+                <div id="products-number">0</div>
+            </i>
+        </div>
+    </nav>
+    <div id="user-basket">
+        <div id="user-basket-head">
+            <div id="circles">
+                <div class="circle" style="background-color: red;"></div>
+                <div class="circle" style="background-color: yellow;"></div>
+                <div class="circle" style="background-color: green;"></div>
+            </div>
+            <i class="fa fa-remove" id="close-basket" style="font-size: 25px; margin-top: -5px;"></i>
+        </div>
+        <hr style="height: 4px; border-radius: 15px; background-color: #aaaaaa78; width: 97%; margin:0 auto 0 auto;" />
+        <ul id="products-in-basket">
+        </ul>
+    </div>
+    <hr style="background-color: #ddd; height: 3px; width: 95%; margin: 0 auto; border-radius: 100px;">
+
+    <div id="main">
+
+        <div class="product">
+            <div class="product-pic"><img src="a10s.svg" alt=""></div>
+            <h2 class="product-title" data-mobilename="samsung galaxy A10s">samsung Galaxy A10s</h2>
+            <h1 class="product-price" data-price="4,700,000">4,700,000</h1>
+            <hr style="height: 3px; background-color: #aaaaaa78; width: 80%; margin:0 auto 15px auto;" />
+            <div class="product-icons">
+                <i class="fa fa-plus-square" data-mobilename="samsung Galaxy A10s" data-price="4,700,000"></i>
+                <i class="fa fa-minus-square" data-mobilename="samsung Galaxy A10s" data-price="4,700,000"></i>
+            </div>
+        </div>
+
+        <div class="product">
+            <div class="product-pic"><img src="A50s.svg" alt=""></div>
+            <h2 class="product-title" data-mobilename="samsung galaxy A50s">samsung Galaxy A50s</h2>
+            <h1 class="product-price" data-price="10,900,000">10,900,000</h1>
+            <hr style="height: 3px; background-color: #aaaaaa78; width: 80%; margin:0 auto 15px auto;" />
+            <div class="product-icons">
+                <i class="fa fa-plus-square" data-mobilename="samsung Galaxy A50s" data-price="10,900,000"></i>
+                <i class="fa fa-minus-square" data-mobilename="samsung Galaxy A50s" data-price="10,900,000"></i>
+            </div>
+        </div>
+
+        <div class="product">
+            <div class="product-pic"><img src="Galaxy-A20s.png" alt=""></div>
+            <h2 class="product-title" data-mobilename="samsung galaxy A20s">samsung Galaxy A20s</h2>
+            <h1 class="product-price" data-price="7,900,000">7,900,000</h1>
+            <hr style="height: 3px; background-color: #aaaaaa78; width: 80%; margin:0 auto 15px auto;" />
+            <div class="product-icons">
+                <i class="fa fa-plus-square" data-mobilename="samsung Galaxy A20s" data-price="7,900,000"></i>
+                <i class="fa fa-minus-square" data-mobilename="samsung Galaxy A20s" data-price="7,900,000"></i>
+            </div>
+        </div>
+
+        <div class="product">
+            <div class="product-pic"><img src="iPhone14.png" alt=""></div>
+            <h2 class="product-title" data-mobilename="iphone 14">Iphone 14</h2>
+            <h1 class="product-price" data-price="100,000,000">100,000,000</h1>
+            <hr style="height: 3px; background-color: #aaaaaa78; width: 80%; margin:0 auto 15px auto;" />
+            <div class="product-icons">
+                <i class="fa fa-plus-square" data-mobilename="iphone 14" data-price="100,000,000"></i>
+                <i class="fa fa-minus-square" data-mobilename="iphone 14" data-price="100,000,000"></i>
+            </div>
+        </div> 
+
+        <div class="product">
+            <div class="product-pic"><img src="HuaweiMate40Pro.png" alt=""></div>
+            <h2 class="product-title" data-mobilename="iphone 14">HuaweiMate 40Pro</h2>
+            <h1 class="product-price" data-price="100,000,000">28,000,000</h1>
+            <hr style="height: 3px; background-color: #aaaaaa78; width: 80%; margin:0 auto 15px auto;" />
+            <div class="product-icons">
+                <i class="fa fa-plus-square" data-mobilename="HuaweiMate 40Pro" data-price="28,000,000"></i>
+                <i class="fa fa-minus-square" data-mobilename="HuaweiMate 40Pro" data-price="28,000,000"></i>
+            </div>
+        </div> 
+
+        <div class="product">
+            <div class="product-pic"><img src="K16UProplus.png" alt=""></div>
+            <h2 class="product-title" data-mobilename="K16UProPlus">K16UProPlus</h2>
+            <h1 class="product-price" data-price="100,000,000">18,000,000</h1>
+            <hr style="height: 3px; background-color: #aaaaaa78; width: 80%; margin:0 auto 15px auto;" />
+            <div class="product-icons">
+                <i class="fa fa-plus-square" data-mobilename="K16UProPlus" data-price="18,000,000"></i>
+                <i class="fa fa-minus-square" data-mobilename="K16UProPlus" data-price="18,000,000"></i>
+            </div>
+        </div> 
+
+        <div class="product">
+            <div class="product-pic"><img src="Nokiax50Pro.png" alt=""></div>
+            <h2 class="product-title" data-mobilename="Nokiax50Pro">Nokiax50Pro</h2>
+            <h1 class="product-price" data-price="100,000,000">23,000,000</h1>
+            <hr style="height: 3px; background-color: #aaaaaa78; width: 80%; margin:0 auto 15px auto;" />
+            <div class="product-icons">
+                <i class="fa fa-plus-square" data-mobilename="Nokiax50Pro" data-price="23,000,000"></i>
+                <i class="fa fa-minus-square" data-mobilename="Nokiax50Pro" data-price="23,000,000"></i>
+            </div>
+        </div> 
+    </div>
+
+    <footer id="footer">
+        <p id="footer-paragraph">
+            developed by JavaScript, developer: Mahdi Ramezani
+        </p>
+    </footer>
+     <script src="script.js"></script>
+</body>
+
+</html>
