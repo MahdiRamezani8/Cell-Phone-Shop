@@ -17,19 +17,19 @@ closeBasketBtn.addEventListener('click', () => {
 })
 
 // Alerter :
-let alerter = $.getElementById('alert')
-function alerterFunc(event) {
-    alerter.style.top = "35px"
+let notification = $.getElementById('notification')
+function notificationFunc(event) {
+    notification.style.top = "35px"
     if (event.target.style.color == "red") {
-        alerter.innerHTML = "you removed product from basket"
-        alerter.style.backgroundColor = "#9e0505"
+        notification.innerHTML = "you removed product from basket"
+        notification.style.backgroundColor = "#9e0505"
     } else {
-        alerter.innerHTML = "you added product to basket"
-        alerter.style.backgroundColor = "#055f05"
+        notification.innerHTML = "you added product to basket"
+        notification.style.backgroundColor = "#055f05"
     }
 
     setTimeout(() => {
-        alerter.style.top = "-1000px"
+        notification.style.top = "-1000px"
     }, 1500);
 }
 
@@ -61,7 +61,7 @@ function addProduct(event) {
     newElemToBaketPrice.classList.add('item')
     newElemToBaketPrice.innerHTML = price
     newElemToBaketPrice.style.marginLeft = '200px'
-    alerterFunc(event)
+    notificationFunc(event)
 
     newElemToBaketLi.append(newElemToBaketName, newElemToBaketPrice)
     productsInBasket.append(newElemToBaketLi)
@@ -116,7 +116,7 @@ removeButton.forEach((element) => {
                 return element.dataset.mobilename == event.target.dataset.mobilename
             })
             removeProductArray[removeProductArray.length - 1].remove()
-            alerterFunc(event)
+            notificationFunc(event)
         }
     })
 })
