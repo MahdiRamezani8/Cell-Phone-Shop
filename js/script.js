@@ -16,7 +16,7 @@ closeBasketBtn.addEventListener('click', () => {
     userBasket.style.top = "-1000px"
 })
 
-// Alerter :
+// Notification :
 let notification = $.getElementById('notification')
 function notificationFunc(event) {
     notification.style.top = "35px"
@@ -32,6 +32,7 @@ function notificationFunc(event) {
         notification.style.top = "-1000px"
     }, 1500);
 }
+
 
 // ELEMENTS :
 let productsInBasket = $.getElementById('products-in-basket')
@@ -62,7 +63,6 @@ function addProduct(event) {
     newElemToBaketPrice.innerHTML = price
     newElemToBaketPrice.style.marginLeft = '200px'
     notificationFunc(event)
-
     newElemToBaketLi.append(newElemToBaketName, newElemToBaketPrice)
     productsInBasket.append(newElemToBaketLi)
 }
@@ -110,13 +110,16 @@ removeButton.forEach((element) => {
         if (+productsNumber.innerHTML == 0) {
             return
         } else {
-            productsNumber.innerHTML = +productsNumber.innerHTML - 1
             var removeProductArray = Array.from($.querySelectorAll('.product-item'))
             removeProductArray = removeProductArray.filter((element) => {
                 return element.dataset.mobilename == event.target.dataset.mobilename
             })
-            removeProductArray[removeProductArray.length - 1].remove()
-            notificationFunc(event)
+            if (removeProductArray.length == 0) {
+                return
+            } else {
+                productsNumber.innerHTML = +productsNumber.innerHTML - 1
+                removeProductArray[removeProductArray.length - 1].remove()
+            }
         }
     })
 })
