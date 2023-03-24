@@ -11,6 +11,13 @@
     font-family: yekan;
 }
 
+.hr {
+    height: 3px;
+    background-color: #aaaaaa78;
+    width: 95%;
+    margin: 0 auto 15px auto;
+}
+
 #header {
     width: 95%;
     padding: 15px;
@@ -123,12 +130,6 @@
     font-size: 20px;
 }
 
-.hr {
-    height: 3px;
-    background-color: #aaaaaa78;
-    width: 95%;
-    margin: 0 auto 15px auto;
-}
 
 #footer {
     margin-top: 50px;
