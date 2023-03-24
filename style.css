@@ -101,6 +101,20 @@
     margin-bottom: 5px;
 }
 
+#alert {
+    position: absolute;
+    height: 35px;
+    width: 47%;
+    padding: 3px 7px;
+    top: -1000px;
+    left: 10px;
+    transition-duration: .4s;
+    border-radius: 0 0 75px 0;
+    color: #fff;
+    font-size: 25px;
+    word-spacing: 4px;
+}
+
 #main {
     width: 95%;
     padding: 15px;

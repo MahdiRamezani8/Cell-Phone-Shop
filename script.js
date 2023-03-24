@@ -1,7 +1,8 @@
 let $ = document
 
-// MODAL :
+// MODALS :
 
+// Basket :
 let userBasket = $.getElementById('user-basket')
 let openBasketBtn = $.getElementById('open-basket')
 let productsNumber = $.getElementById('products-number')
@@ -14,6 +15,23 @@ let closeBasketBtn = $.getElementById('close-basket');
 closeBasketBtn.addEventListener('click', () => {
     userBasket.style.top = "-1000px"
 })
+
+// Alerter :
+let alerter = $.getElementById('alert')
+function alerterFunc(event) {
+    alerter.style.top = "35px"
+    if (event.target.style.color == "red") {
+        alerter.innerHTML = "you removed product from basket"
+        alerter.style.backgroundColor = "#9e0505"
+    } else {
+        alerter.innerHTML = "you added product to basket"
+        alerter.style.backgroundColor = "#055f05"
+    }
+
+    setTimeout(() => {
+        alerter.style.top = "-1000px"
+    }, 1500);
+}
 
 // ELEMENTS :
 let productsInBasket = $.getElementById('products-in-basket')
@@ -43,6 +61,7 @@ function addProduct(event) {
     newElemToBaketPrice.classList.add('item')
     newElemToBaketPrice.innerHTML = price
     newElemToBaketPrice.style.marginLeft = '200px'
+    alerterFunc(event)
 
     newElemToBaketLi.append(newElemToBaketName, newElemToBaketPrice)
     productsInBasket.append(newElemToBaketLi)
@@ -55,7 +74,7 @@ addButton.forEach((element) => {
     element.addEventListener('click', (event) => {
         name = event.target.dataset.mobilename
         price = event.target.dataset.price
-        addProduct()
+        addProduct(event)
     })
 })
 
@@ -76,8 +95,8 @@ productPic.forEach(element => {
     })
 })
 
-openBasketBtn.addEventListener('drop', () => {
-    addProduct()
+openBasketBtn.addEventListener('drop', (event) => {
+    addProduct(event)
     productsNumber.style.display = "block"
     openBasketBtn.classList.remove('animate__animated')
     openBasketBtn.classList.remove('animate__tada')
@@ -97,6 +116,7 @@ removeButton.forEach((element) => {
                 return element.dataset.mobilename == event.target.dataset.mobilename
             })
             removeProductArray[removeProductArray.length - 1].remove()
+            alerterFunc(event)
         }
     })
 })
