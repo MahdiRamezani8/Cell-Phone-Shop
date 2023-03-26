@@ -3,12 +3,21 @@ let $ = document
 // MODALS :
 
 // Basket :
-let userBasket = $.getElementById('user-basket')
+let userBasket = $.getElementById('basket')
+let productsInBasket = $.getElementById('products-in-basket')
 let openBasketBtn = $.getElementById('open-basket')
 let productsNumber = $.getElementById('products-number')
+let totalPrice = $.getElementById('total--price')
+let sum = 0
 
+const removeSpaces = str => str.replace(/\s/g, '')
 openBasketBtn.addEventListener('click', () => {
+    let calculateTheTotalPrice = Array.from(productsInBasket.children)
     userBasket.style.top = "35px"
+    calculateTheTotalPrice.forEach(element => {
+        sum = sum + Number(removeSpaces(element.children[1].innerHTML))  
+    })
+    totalPrice.innerHTML = sum
 })
 
 let closeBasketBtn = $.getElementById('close-basket');
@@ -35,7 +44,6 @@ function notificationFunc(event) {
 
 
 // ELEMENTS :
-let productsInBasket = $.getElementById('products-in-basket')
 let addButton = $.querySelectorAll('.fa-plus-square')
 let removeButton = $.querySelectorAll('.fa-minus-square')
 let productPrice = $.querySelectorAll('.product-price')
@@ -106,7 +114,7 @@ openBasketBtn.addEventListener('drop', (event) => {
 removeButton.forEach((element) => {
     element.title = "remove product"
     element.style.color = "red"
-    element.addEventListener('click', () => {
+    element.addEventListener('click', (event) => {
         if (+productsNumber.innerHTML == 0) {
             return
         } else {
@@ -119,6 +127,7 @@ removeButton.forEach((element) => {
             } else {
                 productsNumber.innerHTML = +productsNumber.innerHTML - 1
                 removeProductArray[removeProductArray.length - 1].remove()
+                notificationFunc(event)
             }
         }
     })
