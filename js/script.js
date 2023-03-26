@@ -12,18 +12,23 @@ let sum = 0
 
 const removeSpaces = str => str.replace(/\s/g, '')
 openBasketBtn.addEventListener('click', () => {
-    let calculateTheTotalPrice = Array.from(productsInBasket.children)
     userBasket.style.top = "35px"
-    calculateTheTotalPrice.forEach(element => {
-        sum = sum + Number(removeSpaces(element.children[1].innerHTML))  
-    })
-    totalPrice.innerHTML = sum
 })
 
 let closeBasketBtn = $.getElementById('close-basket');
 closeBasketBtn.addEventListener('click', () => {
     userBasket.style.top = "-1000px"
 })
+
+function calculateTheTotalPriceFunc() {
+    totalPrice.innerHTML = 0
+    let calculateTheTotalPrice = Array.from(productsInBasket.children)
+    calculateTheTotalPrice.forEach(element => {
+        sum = Number(removeSpaces(element.children[1].innerHTML))
+        totalPrice.innerHTML = +totalPrice.innerHTML + sum
+        sum = 0
+    })
+}
 
 // Notification :
 let notification = $.getElementById('notification')
@@ -73,6 +78,7 @@ function addProduct(event) {
     notificationFunc(event)
     newElemToBaketLi.append(newElemToBaketName, newElemToBaketPrice)
     productsInBasket.append(newElemToBaketLi)
+    calculateTheTotalPriceFunc()
 }
 
 // With Btn :
@@ -128,6 +134,7 @@ removeButton.forEach((element) => {
                 productsNumber.innerHTML = +productsNumber.innerHTML - 1
                 removeProductArray[removeProductArray.length - 1].remove()
                 notificationFunc(event)
+                calculateTheTotalPriceFunc()
             }
         }
     })
