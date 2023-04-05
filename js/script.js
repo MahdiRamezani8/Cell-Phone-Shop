@@ -21,7 +21,7 @@ closeBasketBtn.addEventListener('click', () => {
 })
 
 function calculateTheTotalPriceFunc() {
-    totalPrice.innerHTML = 0
+    totalPrice.innerHTML = 0 
     let calculateTheTotalPrice = Array.from(productsInBasket.children)
     calculateTheTotalPrice.forEach(element => {
         sum = Number(removeSpaces(element.children[1].innerHTML))
