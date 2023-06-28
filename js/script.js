@@ -1,5 +1,19 @@
 let $ = document
 
+const productsInventory = [
+    {id: 1, name: 'Galaxy A10s', price: 470000,imgAddress: 'Photos/a10s.svg',},
+    {id: 2, name: 'Galaxy A20s', price: 5300000,imgAddress: 'Photos/a50s.svg',},
+    {id: 3, name: 'Galaxy A50s', price: 11900000,imgAddress: 'Photos/Galaxy-A20s.png',},
+    {id: 4, name: 'Mate40 Pro', price: 26500000,imgAddress: 'Photos/HuaweiMate40Pro.png',},
+    {id: 5, name: 'iPhone 14', price: 142700000,imgAddress: 'Photos/iPhone14.png',},
+    {id: 6, name: 'x50 Pro', price: 19700000,imgAddress: 'Photos/K16UProplus.png',},
+    {id: 7, name: 'K16U Proplus', price: 34800000,imgAddress: 'Photos/Nokiax50Pro.png',},
+]
+
+const productsContainer = $.getElementById('main')
+productsInventory.forEach(product => {
+    productsContainer.insertAdjacentHTML('beforeend', '<div class="product"> <img class="product-pic" src="' + product.imgAddress + '"> <h2 class="product-title">' + product.name + '</h2> <h1 class="product-price">' + product.price + '</h1><hr class="hr" /> <div class="product-icons"> <i class="fa fa-plus-square"></i> <i class="fa fa-minus-square" ></i> </div> </div>')
+})
 // MODALS :
 
 // Basket :
