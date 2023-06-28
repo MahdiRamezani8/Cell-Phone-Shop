@@ -1,9 +1,5 @@
 # Cell Phone Shop
-it's a cell phone shop, but it dosen't matter beacuse:
-
-      👉🏻products are just a photo for desing
-      👉🏻i fucused in some features like Drag and Drop
-      👉🏻its my first experince in shopping cart simulation
+it's a cell phone shop
     
 ## 🛠 Tools:
 
