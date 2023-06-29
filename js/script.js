@@ -42,6 +42,24 @@ const productsInventory = [{
         price: 34800000,
         imgAddress: 'Photos/Nokiax50Pro.png',
     },
+    {
+        id: 8,
+        name: 's21Ultra5G',
+        price: 120000000,
+        imgAddress: 'Photos/s21Ultra5G.avif',
+    },
+    {
+        id: 9,
+        name: 'iPhone13',
+        price: 78300000,
+        imgAddress: 'Photos/iPhone13.png',
+    },
+    {
+        id:10,
+        name: 'iPhone6s',
+        price: 34800000,
+        imgAddress: 'Photos/iPhone6s.png',
+    },
 ];
 const productsInUserBasket = [];
 
@@ -52,7 +70,7 @@ productsInventory.forEach(product => {
     <div class="product">
       <img class="product-pic" data-id="${product.id}" src="${product.imgAddress}">
       <h2 class="product-title">${product.name}</h2>
-      <h1 class="product-price">${product.price}</h1>
+      <h1 class="product-price">${product.price.toLocaleString('en-US')}</h1>
       <hr class="hr" />
       <div class="product-icons">
         <i class="fa fa-plus-square" data-id="${product.id}"></i>
@@ -90,8 +108,8 @@ function addProduct() {
     const productMarkup = `
     <li class="product-item-in-basket" data-id="${this.dataset.id}">
       <div class="item">${chosenProduct.name}</div>
-      <div class="item">${chosenProduct.price}</div>
-      <i class="fa fa-minus-square"></i>
+      <div class="item">${chosenProduct.price.toLocaleString('en-US')}</div>
+      <i class="fa fa-minus-square"${chosenProduct.id}></i>
     </li>`;
     productsInBasket.insertAdjacentHTML('beforeend', productMarkup);
     const productItemElemntInBasket = Array.from($.querySelectorAll('.product-item-in-basket'));
@@ -100,12 +118,13 @@ function addProduct() {
     productsCounter.innerHTML = productsInUserBasket.length;
     notify('You added product to the basket', 'green');
     calculateTotalPrice();
-    console.log(productsInUserBasket);
-
 }
 
 function removeProductFromBasketWithInnerBtn(event) {
     event.target.parentElement.remove();
+    const theProductChosenToRemove = productsInUserBasket.find(product => product.id == event.target.dataset.id);
+    const index = productsInUserBasket.indexOf(theProductChosenToRemove)
+    productsInUserBasket.splice(index, 1)
     calculateTotalPrice()
 }
 
@@ -118,16 +137,17 @@ function removeProductFromBasket(event) {
         return;
     }
     const productsAlreadyInBasket = productsInBasket.querySelector(`[data-id="${theProductChosenToRemove.id}"]`);
-    productsCounter.innerHTML = --productsInUserBasket.length;
+    productsCounter.innerHTML = productsInUserBasket.length - 1;
+    const index = productsInUserBasket.indexOf(theProductChosenToRemove)
+    productsInUserBasket.splice(index, 1)
     productsAlreadyInBasket.remove();
     notify('You removed product from the basket', 'red');
-    console.log(productsInUserBasket);
     calculateTotalPrice();
 }
 
 function calculateTotalPrice() {
     const totalPrice = productsInUserBasket.reduce((total, product) => total + product.price, 0);
-    totalPriceElement.innerHTML = totalPrice;
+    totalPriceElement.innerHTML = totalPrice.toLocaleString('en-US');
 }
 
 function notify(message, color) {
