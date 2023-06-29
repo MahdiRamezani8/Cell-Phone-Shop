@@ -1,155 +1,145 @@
-let $ = document
+// const $ = document;
 
-const productsInventory = [
-    {id: 1, name: 'Galaxy A10s', price: 470000,imgAddress: 'Photos/a10s.svg',},
-    {id: 2, name: 'Galaxy A20s', price: 5300000,imgAddress: 'Photos/a50s.svg',},
-    {id: 3, name: 'Galaxy A50s', price: 11900000,imgAddress: 'Photos/Galaxy-A20s.png',},
-    {id: 4, name: 'Mate40 Pro', price: 26500000,imgAddress: 'Photos/HuaweiMate40Pro.png',},
-    {id: 5, name: 'iPhone 14', price: 142700000,imgAddress: 'Photos/iPhone14.png',},
-    {id: 6, name: 'x50 Pro', price: 19700000,imgAddress: 'Photos/K16UProplus.png',},
-    {id: 7, name: 'K16U Proplus', price: 34800000,imgAddress: 'Photos/Nokiax50Pro.png',},
-]
+// // Database
+// const productsInventory = [{
+//         id: 1,
+//         name: 'Galaxy A10s',
+//         price: 4700000,
+//         imgAddress: 'Photos/a10s.svg',
+//     },
+//     {
+//         id: 2,
+//         name: 'Galaxy A20s',
+//         price: 5300000,
+//         imgAddress: 'Photos/a50s.svg',
+//     }, {
+//         id: 3,
+//         name: 'Galaxy A50s',
+//         price: 11900000,
+//         imgAddress: 'Photos/Galaxy-A20s.png',
+//     },
+//     {
+//         id: 4,
+//         name: 'Mate40 Pro',
+//         price: 26500000,
+//         imgAddress: 'Photos/HuaweiMate40Pro.png',
+//     },
+//     {
+//         id: 5,
+//         name: 'iPhone 14',
+//         price: 142700000,
+//         imgAddress: 'Photos/iPhone14.png',
+//     },
+//     {
+//         id: 6,
+//         name: 'x50 Pro',
+//         price: 19700000,
+//         imgAddress: 'Photos/K16UProplus.png',
+//     },
+//     {
+//         id: 7,
+//         name: 'K16U Proplus',
+//         price: 34800000,
+//         imgAddress: 'Photos/Nokiax50Pro.png',
+//     },
+// ];
+// const productsInUserBasket = [];
 
-const productsContainer = $.getElementById('main')
-productsInventory.forEach(product => {
-    productsContainer.insertAdjacentHTML('beforeend', '<div class="product"> <img class="product-pic" src="' + product.imgAddress + '"> <h2 class="product-title">' + product.name + '</h2> <h1 class="product-price">' + product.price + '</h1><hr class="hr" /> <div class="product-icons"> <i class="fa fa-plus-square"></i> <i class="fa fa-minus-square" ></i> </div> </div>')
-})
-// MODALS :
+// // Adding products from the inventory to dom
+// const productsContainer = $.getElementById('main');
+// productsInventory.forEach(product => {
+//     const productMarkup = `
+//     <div class="product">
+//       <img class="product-pic" data-id="${product.id}" src="${product.imgAddress}">
+//       <h2 class="product-title">${product.name}</h2>
+//       <h1 class="product-price">${product.price}</h1>
+//       <hr class="hr" />
+//       <div class="product-icons">
+//         <i class="fa fa-plus-square" data-id="${product.id}"></i>
+//         <i class="fa fa-minus-square" data-id="${product.id}"></i>
+//       </div>
+//     </div>
+//   `;
+//     productsContainer.insertAdjacentHTML('beforeend', productMarkup);
+// });
 
-// Basket :
-let userBasket = $.getElementById('basket')
-let productsInBasket = $.getElementById('products-in-basket')
-let openBasketBtn = $.getElementById('open-basket')
-let productsNumber = $.getElementById('products-number')
-let totalPrice = $.getElementById('total--price')
-let sum = 0
+// // Elements
+// const addButton = $.querySelectorAll('.fa-plus-square');
+// const removeButton = $.querySelectorAll('.fa-minus-square');
+// const productPic = $.querySelectorAll('.product-pic');
+// const userBasket = $.getElementById('basket');
+// const productsInBasket = $.getElementById('products-in-basket');
+// const totalPriceElement = $.getElementById('total--price');
+// const productsCounter = $.getElementById('products-number');
+// const openBasketBtn = $.getElementById('open-basket');
+// const closeBasketBtn = $.getElementById('close-basket');
+// const notification = $.getElementById('notification');
 
-const removeSpaces = str => str.replace(/\s/g, '')
-openBasketBtn.addEventListener('click', () => {
-    userBasket.style.top = "35px"
-})
+// // Event Listeners
+// openBasketBtn.addEventListener('click', () => userBasket.style.top = "35px");
+// closeBasketBtn.addEventListener('click', () => userBasket.style.top = "-1000px");
+// addButton.forEach(element => element.addEventListener('click', addProduct));
+// removeButton.forEach(element => element.addEventListener('click', removeProductFromBasket));
+// productPic.forEach(element => element.addEventListener('dragstart', handleDragStart));
+// openBasketBtn.addEventListener('drop', handleDrop);
+// window.addEventListener('dragover', event => event.preventDefault());
 
-let closeBasketBtn = $.getElementById('close-basket');
-closeBasketBtn.addEventListener('click', () => {
-    userBasket.style.top = "-1000px"
-})
+// // Functions
+// function addProduct() {
+//     const chosenProduct = productsInventory.find(product => product.id == this.dataset.id);
+//     const productMarkup = `
+//     <li class="product-item" data-id="${this.dataset.id}">
+//       <div class="item">${chosenProduct.name}</div>
+//       <div class="item" style="margin-left: 200px;">${chosenProduct.price}</div>
+//     </li>`;
+//     productsInBasket.insertAdjacentHTML('beforeend', productMarkup);
+//     productsInUserBasket.push(chosenProduct);
+//     productsCounter.innerHTML = productsInUserBasket.length;
+//     notify('You added product to the basket', '#055f05');
+//     calculateTotalPrice();
+// }
 
-function calculateTheTotalPriceFunc() {
-    totalPrice.innerHTML = 0 
-    let calculateTheTotalPrice = Array.from(productsInBasket.children)
-    calculateTheTotalPrice.forEach(element => {
-        sum = Number(removeSpaces(element.children[1].innerHTML))
-        totalPrice.innerHTML = +totalPrice.innerHTML + sum
-        sum = 0
-    })
-}
+// function removeProductFromBasket(event) {
+//     if (productsInUserBasket.length === 0) {
+//         return;
+//     }
+//     const theProductChosenToRemove = productsInUserBasket.find(product => product.id == event.target.dataset.id);
+//     if (!theProductChosenToRemove) {
+//         return;
+//     }
+//     const productsAlreadyInBasket = productsInBasket.querySelector(`[data-id="${theProductChosenToRemove.id}"]`);
+//     productsCounter.innerHTML = --productsInUserBasket.length;
+//     productsAlreadyInBasket.remove();
+//     notify('You removed product from the basket', '#9e0505');
+//     calculateTotalPrice();
+// }
 
-// Notification :
-let notification = $.getElementById('notification')
-function notificationFunc(event) {
-    notification.style.top = "35px"
-    if (event.target.style.color == "red") {
-        notification.innerHTML = "you removed product from basket"
-        notification.style.backgroundColor = "#9e0505"
-    } else {
-        notification.innerHTML = "you added product to basket"
-        notification.style.backgroundColor = "#055f05"
-    }
+// function calculateTotalPrice() {
+//     const totalPrice = productsInUserBasket.reduce((total, product) => total + product.price, 0);
+//     totalPriceElement.innerHTML = totalPrice;
+// }
 
-    setTimeout(() => {
-        notification.style.top = "-1000px"
-    }, 1500);
-}
+// function notify(message, color) {
+//     notification.style.top = "35px";
+//     notification.innerHTML = message;
+//     notification.style.backgroundColor = color;
+//     setTimeout(() => notification.style.top = "-1000px", 1500);
+// }
 
+// function handleDragStart(event) {
+//     productsCounter.style.display = "none";
+//     openBasketBtn.classList.add('animate__animated', 'animate__tada');
+//     openBasketBtn.style.animationIterationCount = "infinite";
+//     event.dataTransfer.setData('text/plain', event.target.dataset.id);
+// }
 
-// ELEMENTS :
-let addButton = $.querySelectorAll('.fa-plus-square')
-let removeButton = $.querySelectorAll('.fa-minus-square')
-let productPrice = $.querySelectorAll('.product-price')
-let productTitle = $.querySelectorAll('.product-title')
-let productPic = $.querySelectorAll('.product-pic')
-let name = null
-let price = null
-
-// ADD AND REMOVE :
-
-// Add Products To Basket :
-function addProduct(event) {
-    productsNumber.innerHTML = +productsNumber.innerHTML + 1
-
-    let newElemToBaketLi = $.createElement('li')
-    newElemToBaketLi.classList.add('product-item')
-    newElemToBaketLi.dataset.mobilename = name
-
-    let newElemToBaketName = $.createElement('div')
-    newElemToBaketName.classList.add('item')
-    newElemToBaketName.innerHTML = name
-
-    let newElemToBaketPrice = $.createElement('div')
-    newElemToBaketPrice.classList.add('item')
-    newElemToBaketPrice.innerHTML = price
-    newElemToBaketPrice.style.marginLeft = '200px'
-    notificationFunc(event)
-    newElemToBaketLi.append(newElemToBaketName, newElemToBaketPrice)
-    productsInBasket.append(newElemToBaketLi)
-    calculateTheTotalPriceFunc()
-}
-
-// With Btn :
-addButton.forEach((element) => {
-    element.title = "add product"
-    element.style.color = "green"
-    element.addEventListener('click', (event) => {
-        name = event.target.dataset.mobilename
-        price = event.target.dataset.price
-        addProduct(event)
-    })
-})
-
-// By Drag And Drop :
-window.addEventListener('dragover', (event) => {
-    event.preventDefault()
-})
-
-productPic.forEach(element => {
-    element.addEventListener('dragstart', () => {
-        productsNumber.style.display = "none"
-        openBasketBtn.classList.add('animate__animated')
-        openBasketBtn.classList.add('animate__tada')
-        openBasketBtn.style.animationIterationCount = "infinite"
-
-        name = event.target.dataset.mobilename
-        price = event.target.dataset.price
-    })
-})
-
-openBasketBtn.addEventListener('drop', (event) => {
-    addProduct(event)
-    productsNumber.style.display = "block"
-    openBasketBtn.classList.remove('animate__animated')
-    openBasketBtn.classList.remove('animate__tada')
-})
-
-// Remove Products From Basket :
-removeButton.forEach((element) => {
-    element.title = "remove product"
-    element.style.color = "red"
-    element.addEventListener('click', (event) => {
-        if (+productsNumber.innerHTML == 0) {
-            return
-        } else {
-            var removeProductArray = Array.from($.querySelectorAll('.product-item'))
-            removeProductArray = removeProductArray.filter((element) => {
-                return element.dataset.mobilename == event.target.dataset.mobilename
-            })
-            if (removeProductArray.length == 0) {
-                return
-            } else {
-                productsNumber.innerHTML = +productsNumber.innerHTML - 1
-                removeProductArray[removeProductArray.length - 1].remove()
-                notificationFunc(event)
-                calculateTheTotalPriceFunc()
-            }
-        }
-    })
-})
+// function handleDrop(event) {
+//     const draggedProductId = event.dataTransfer.getData('text/plain');
+//     addProduct.call({
+//         dataset: {
+//             id: draggedProductId
+//         }
+//     });
+//     productsCounter.style.display = "block";
+//     openBasketBtn.classList.remove('animate__animated', 'animate__tada');
+// }
