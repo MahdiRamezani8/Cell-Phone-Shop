@@ -55,7 +55,7 @@ const productsInventory = [{
         imgAddress: 'Photos/iPhone13.png',
     },
     {
-        id:10,
+        id: 10,
         name: 'iPhone6s',
         price: 34800000,
         imgAddress: 'Photos/iPhone6s.png',
@@ -94,8 +94,8 @@ const closeBasketBtn = $.getElementById('close-basket');
 const notification = $.getElementById('notification');
 
 // Event Listeners
-openBasketBtn.addEventListener('click', () => userBasket.style.top = "35px");
-closeBasketBtn.addEventListener('click', () => userBasket.style.top = "-1000px");
+openBasketBtn.addEventListener('click', openBasket);
+closeBasketBtn.addEventListener('click', closeBaket);
 addButton.forEach(element => element.addEventListener('click', addProduct));
 removeButton.forEach(element => element.addEventListener('click', removeProductFromBasket));
 productPic.forEach(element => element.addEventListener('dragstart', handleDragStart));
@@ -104,12 +104,13 @@ window.addEventListener('dragover', event => event.preventDefault());
 
 // Functions
 function addProduct() {
+    console.log(this);
     const chosenProduct = productsInventory.find(product => product.id == this.dataset.id);
     const productMarkup = `
     <li class="product-item-in-basket" data-id="${this.dataset.id}">
       <div class="item">${chosenProduct.name}</div>
       <div class="item">${chosenProduct.price.toLocaleString('en-US')}</div>
-      <i class="fa fa-minus-square"${chosenProduct.id}></i>
+      <i class="fa fa-minus-square" data-id="${chosenProduct.id}"></i>
     </li>`;
     productsInBasket.insertAdjacentHTML('beforeend', productMarkup);
     const productItemElemntInBasket = Array.from($.querySelectorAll('.product-item-in-basket'));
@@ -123,6 +124,7 @@ function addProduct() {
 function removeProductFromBasketWithInnerBtn(event) {
     event.target.parentElement.remove();
     const theProductChosenToRemove = productsInUserBasket.find(product => product.id == event.target.dataset.id);
+    console.log(theProductChosenToRemove);
     const index = productsInUserBasket.indexOf(theProductChosenToRemove)
     productsInUserBasket.splice(index, 1)
     calculateTotalPrice()
@@ -173,4 +175,12 @@ function handleDrop(event) {
     });
     productsCounter.style.display = "block";
     openBasketBtn.classList.remove('animate__animated', 'animate__tada');
+}
+
+function openBasket() {
+    userBasket.style.top = "35px"
+}
+
+function closeBaket() {
+    userBasket.style.top = "-1000px"
 }
