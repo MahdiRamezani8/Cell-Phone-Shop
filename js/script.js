@@ -12,13 +12,13 @@ const productsWarehouse = [{
         id: 2,
         name: 'Galaxy A20s',
         price: 5300000,
-        imgAddress: 'Photos/a50s.svg',
+        imgAddress: 'Photos/A50s.svg',
         stock: 3,
     }, {
         id: 3,
         name: 'Galaxy A50s',
         price: 11900000,
-        imgAddress: 'Photos/Galaxy-A20s.png',
+        imgAddress: 'Photos/A20s.png',
         stock: 6,
     },
     {
@@ -53,7 +53,7 @@ const productsWarehouse = [{
         id: 8,
         name: 's21Ultra5G',
         price: 120000000,
-        imgAddress: 'Photos/s21Ultra5G.avif',
+        imgAddress: 'Photos/S21Ultra5G.avif',
         stock: 8,
     },
     {
@@ -111,25 +111,78 @@ removeButton.forEach(element => element.addEventListener('click', removeProductF
 productPic.forEach(element => element.addEventListener('dragstart', handleDragStart));
 openBasketBtn.addEventListener('drop', handleDrop);
 window.addEventListener('dragover', event => event.preventDefault());
+basket.addEventListener('click', event => {
+    if (event.target.className == 'fa fa-minus-square') {
+        removeProductFromBasketWithInnerBtn(event.target)
+    }
+})
+
+// needs to operate
+
+let chosenProductInWarehouse = null
+let theProductChosenToOperate = null
+let index = null
 
 // Functions
 function handleProductStock(productID) {
-    const chosenProduct = productsWarehouse.find(product => product.id == productID);
-    const theProductChosenToAdd = productsInUserBasket.find(product => product.id == chosenProduct.id);
-    const index = productsInUserBasket.indexOf(theProductChosenToAdd)
-
+    needsToOperate(productID)
     if (index == -1) {
-        chosenProduct.stock--
-        productsInUserBasket.push(chosenProduct)
-        addProduct(chosenProduct)
+        productsInUserBasket.push({
+            ...chosenProductInWarehouse
+        })
+        needsToOperate(productID)
+        productsInUserBasket[index].stock--
+        addProduct(theProductChosenToOperate)
     } else {
         if (productsInUserBasket[index].stock - 1 < 0) {
             notify('we are out of stock', 'red')
         } else {
             productsInUserBasket[index].stock--
-            addProduct(chosenProduct)
+            addProduct(theProductChosenToOperate)
         }
     }
+}
+
+function removeProductFromBasketWithInnerBtn(target) {
+    target.parentElement.remove();
+    needsToOperate(target.dataset.id)
+
+    if (productsInUserBasket[index].stock + 1 > chosenProductInWarehouse.stock) {
+        productsInUserBasket.splice(index, 1)
+    } else {
+        productsInUserBasket[index].stock++
+    }
+    decreaseProductCounter()
+    calculateTotalPrice()
+}
+
+function removeProductFromBasket() {
+    if (productsInUserBasket.length === 0) {
+        return;
+    }
+    needsToOperate(this.dataset.id)
+
+    if (!theProductChosenToOperate) {
+        notify("you don't have this product in your basket")
+        return
+    }
+
+    if (productsInUserBasket[index].stock + 1 > chosenProductInWarehouse.stock) {
+        productsInUserBasket.splice(index, 1)
+    } else {
+        productsInUserBasket[index].stock++
+    }
+
+    const productsAlreadyInBasket = productsInBasket.querySelector(`[data-id="${theProductChosenToOperate.id}"]`);
+    productsAlreadyInBasket.remove();
+
+    if (productsInUserBasket.length === 0) {
+        closeModal(basket)
+    }
+
+    decreaseProductCounter();
+    notify('You removed product from the basket', 'red');
+    calculateTotalPrice();
 }
 
 function addProduct(chosenProduct) {
@@ -140,48 +193,15 @@ function addProduct(chosenProduct) {
       <i class="fa fa-minus-square" data-id="${chosenProduct.id}"></i>
     </li>`;
     productsInBasket.insertAdjacentHTML('beforeend', productMarkup);
-
-    const productItemElemntInBasket = Array.from(basket.querySelectorAll('.fa-minus-square'));
-    productItemElemntInBasket.forEach(element => element.addEventListener('click', removeProductFromBasketWithInnerBtn));
-
-    productsCounter.innerHTML = Number(productsCounter.innerHTML) + 1
-
+    increaseProductCounter()
     notify('You added product to the basket', 'green');
     calculateTotalPrice();
 }
 
-function removeProductFromBasketWithInnerBtn() {
-    this.parentElement.remove();
-    const theProductChosenToRemove = productsInUserBasket.find(product => product.id == this.dataset.id);
-    const index = productsInUserBasket.indexOf(theProductChosenToRemove)
-    productsInUserBasket[index].stock++
-    if (productsInUserBasket.length === 0) {
-        closeModal(basket)
-    }
-    productsCounter.innerHTML = Number(productsCounter.innerHTML) - 1
-    calculateTotalPrice()
-}
-
-function removeProductFromBasket() {
-    if (productsInUserBasket.length === 0) {
-        return;
-    }
-    const theProductChosenToRemove = productsInUserBasket.find(product => product.id == this.dataset.id);
-    console.log(theProductChosenToRemove);
-    if (theProductChosenToRemove == undefined) {
-        console.log('a');
-    }
-    const productsAlreadyInBasket = productsInBasket.querySelector(`[data-id="${theProductChosenToRemove.id}"]`);
-    productsCounter.innerHTML = Number(productsCounter.innerHTML) - 1
-    const index = productsInUserBasket.indexOf(theProductChosenToRemove)
-    productsInUserBasket[index].stock++
-    productsAlreadyInBasket.remove();
-    notify('You removed product from the basket', 'red');
-    calculateTotalPrice();
-}
-
 function calculateTotalPrice() {
-    const totalPrice = productsInUserBasket.reduce((total, product) => total + product.price, 0);
+    let totalPrice = 0
+    productsInUserBasket.forEach(product => totalPrice += product.stock * product.price);
+    console.log(totalPrice);
     totalPriceElement.innerHTML = totalPrice.toLocaleString('en-US');
 }
 
@@ -205,6 +225,15 @@ function handleDrop(event) {
     productsCounter.style.display = "block";
     openBasketBtn.classList.remove('animate__animated', 'animate__tada');
 }
+
+function needsToOperate(productID) {
+    chosenProductInWarehouse = productsWarehouse.find(product => product.id == productID);
+    theProductChosenToOperate = productsInUserBasket.find(product => product.id == productID);
+    index = productsInUserBasket.indexOf(theProductChosenToOperate)
+}
+
+const increaseProductCounter = () => productsCounter.innerHTML = Number(productsCounter.innerHTML) + 1
+const decreaseProductCounter = () => productsCounter.innerHTML = Number(productsCounter.innerHTML) - 1
 
 const openModal = element => element.style.top = "35px"
 const closeModal = element => element.style.top = "-1000px"
