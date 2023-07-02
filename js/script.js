@@ -7,6 +7,7 @@ const productsWarehouse = [{
         price: 4700000,
         imgAddress: 'Photos/a10s.svg',
         stock: 5,
+        numberOfProduct: 0,
     },
     {
         id: 2,
@@ -14,12 +15,14 @@ const productsWarehouse = [{
         price: 5300000,
         imgAddress: 'Photos/A50s.svg',
         stock: 3,
+        numberOfProduct: 0,
     }, {
         id: 3,
         name: 'Galaxy A50s',
         price: 11900000,
         imgAddress: 'Photos/A20s.png',
         stock: 6,
+        numberOfProduct: 0,
     },
     {
         id: 4,
@@ -27,6 +30,7 @@ const productsWarehouse = [{
         price: 26500000,
         imgAddress: 'Photos/HuaweiMate40Pro.png',
         stock: 4,
+        numberOfProduct: 0,
     },
     {
         id: 5,
@@ -34,6 +38,7 @@ const productsWarehouse = [{
         price: 142700000,
         imgAddress: 'Photos/iPhone14.png',
         stock: 1,
+        numberOfProduct: 0,
     },
     {
         id: 6,
@@ -41,6 +46,7 @@ const productsWarehouse = [{
         price: 19700000,
         imgAddress: 'Photos/K16UProplus.png',
         stock: 3,
+        numberOfProduct: 0,
     },
     {
         id: 7,
@@ -48,6 +54,7 @@ const productsWarehouse = [{
         price: 34800000,
         imgAddress: 'Photos/Nokiax50Pro.png',
         stock: 5,
+        numberOfProduct: 0,
     },
     {
         id: 8,
@@ -55,6 +62,7 @@ const productsWarehouse = [{
         price: 120000000,
         imgAddress: 'Photos/S21Ultra5G.avif',
         stock: 8,
+        numberOfProduct: 0,
     },
     {
         id: 9,
@@ -62,6 +70,7 @@ const productsWarehouse = [{
         price: 78300000,
         imgAddress: 'Photos/iPhone13.png',
         stock: 9,
+        numberOfProduct: 0,
     },
     {
         id: 10,
@@ -69,6 +78,7 @@ const productsWarehouse = [{
         price: 34800000,
         imgAddress: 'Photos/iPhone6s.png',
         stock: 2,
+        numberOfProduct: 0,
     },
 ];
 
@@ -132,12 +142,14 @@ function handleProductStock(productID) {
         })
         needsToOperate(productID)
         productsInUserBasket[index].stock--
+        productsInUserBasket[index].numberOfProduct++
         addProduct(theProductChosenToOperate)
     } else {
         if (productsInUserBasket[index].stock - 1 < 0) {
             notify('we are out of stock', 'red')
         } else {
             productsInUserBasket[index].stock--
+            productsInUserBasket[index].numberOfProduct++
             addProduct(theProductChosenToOperate)
         }
     }
@@ -151,6 +163,7 @@ function removeProductFromBasketWithInnerBtn(target) {
         productsInUserBasket.splice(index, 1)
     } else {
         productsInUserBasket[index].stock++
+        productsInUserBasket[index].numberOfProduct--
     }
     decreaseProductCounter()
     calculateTotalPrice()
@@ -171,6 +184,7 @@ function removeProductFromBasket() {
         productsInUserBasket.splice(index, 1)
     } else {
         productsInUserBasket[index].stock++
+        productsInUserBasket[index].numberOfProduct--
     }
 
     const productsAlreadyInBasket = productsInBasket.querySelector(`[data-id="${theProductChosenToOperate.id}"]`);
@@ -200,7 +214,7 @@ function addProduct(chosenProduct) {
 
 function calculateTotalPrice() {
     let totalPrice = 0
-    productsInUserBasket.forEach(product => totalPrice += product.stock * product.price);
+    productsInUserBasket.forEach(product => totalPrice += product.numberOfProduct * product.price);
     console.log(totalPrice);
     totalPriceElement.innerHTML = totalPrice.toLocaleString('en-US');
 }
