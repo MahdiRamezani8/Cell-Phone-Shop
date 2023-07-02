@@ -16,7 +16,8 @@ const productsWarehouse = [{
         imgAddress: 'Photos/A50s.svg',
         stock: 3,
         numberOfProduct: 0,
-    }, {
+    }, 
+    {
         id: 3,
         name: 'Galaxy A50s',
         price: 11900000,
@@ -83,6 +84,7 @@ const productsWarehouse = [{
 ];
 
 const productsInUserBasket = [];
+
 // Adding products from the warehouse to dom
 const productsContainer = $.getElementById('main');
 productsWarehouse.forEach(product => {
@@ -116,9 +118,17 @@ const notification = $.getElementById('notification');
 // Event Listeners
 openBasketBtn.addEventListener('click', () => openModal(basket));
 closeBasketBtn.addEventListener('click', () => closeModal(basket));
-addButton.forEach(element => element.addEventListener('click', event => handleProductStock(event.target.dataset.id)));
-removeButton.forEach(element => element.addEventListener('click', removeProductFromBasket));
-productPic.forEach(element => element.addEventListener('dragstart', handleDragStart));
+productsContainer.addEventListener('click', event => {
+    if (event.target.className == "fa fa-plus-square") {
+        handleProductStock(event.target.dataset.id)
+    }
+    if (event.target.className == "fa fa-minus-square") {
+        removeProductFromBasket()
+    }
+    if (event.target.className == "product-pic") {
+        handleDragStart()
+    }
+})
 openBasketBtn.addEventListener('drop', handleDrop);
 window.addEventListener('dragover', event => event.preventDefault());
 basket.addEventListener('click', event => {
@@ -128,7 +138,6 @@ basket.addEventListener('click', event => {
 })
 
 // needs to operate
-
 let chosenProductInWarehouse = null
 let theProductChosenToOperate = null
 let index = null
@@ -155,10 +164,22 @@ function handleProductStock(productID) {
     }
 }
 
+function addProduct(chosenProduct) {
+    const productMarkup = `
+    <li class="product-item-in-basket" data-id="${chosenProduct.id}">
+      <div class="item">${chosenProduct.name}</div>
+      <div class="item">${chosenProduct.price.toLocaleString('en-US')}</div>
+      <i class="fa fa-minus-square" data-id="${chosenProduct.id}"></i>
+    </li>`;
+    productsInBasket.insertAdjacentHTML('beforeend', productMarkup);
+    increaseProductCounter()
+    notify('You added product to the basket', 'green');
+    calculateTotalPrice();
+}
+
 function removeProductFromBasketWithInnerBtn(target) {
     target.parentElement.remove();
     needsToOperate(target.dataset.id)
-
     if (productsInUserBasket[index].stock + 1 > chosenProductInWarehouse.stock) {
         productsInUserBasket.splice(index, 1)
     } else {
@@ -174,56 +195,24 @@ function removeProductFromBasket() {
         return;
     }
     needsToOperate(this.dataset.id)
-
     if (!theProductChosenToOperate) {
         notify("you don't have this product in your basket")
         return
     }
-
     if (productsInUserBasket[index].stock + 1 > chosenProductInWarehouse.stock) {
         productsInUserBasket.splice(index, 1)
     } else {
         productsInUserBasket[index].stock++
         productsInUserBasket[index].numberOfProduct--
     }
-
     const productsAlreadyInBasket = productsInBasket.querySelector(`[data-id="${theProductChosenToOperate.id}"]`);
     productsAlreadyInBasket.remove();
-
     if (productsInUserBasket.length === 0) {
         closeModal(basket)
     }
-
     decreaseProductCounter();
     notify('You removed product from the basket', 'red');
     calculateTotalPrice();
-}
-
-function addProduct(chosenProduct) {
-    const productMarkup = `
-    <li class="product-item-in-basket" data-id="${chosenProduct.id}">
-      <div class="item">${chosenProduct.name}</div>
-      <div class="item">${chosenProduct.price.toLocaleString('en-US')}</div>
-      <i class="fa fa-minus-square" data-id="${chosenProduct.id}"></i>
-    </li>`;
-    productsInBasket.insertAdjacentHTML('beforeend', productMarkup);
-    increaseProductCounter()
-    notify('You added product to the basket', 'green');
-    calculateTotalPrice();
-}
-
-function calculateTotalPrice() {
-    let totalPrice = 0
-    productsInUserBasket.forEach(product => totalPrice += product.numberOfProduct * product.price);
-    console.log(totalPrice);
-    totalPriceElement.innerHTML = totalPrice.toLocaleString('en-US');
-}
-
-function notify(message, color) {
-    openModal(notification)
-    notification.innerHTML = message;
-    notification.style.backgroundColor = color;
-    setTimeout(() => closeModal(notification), 1500);
 }
 
 function handleDragStart(event) {
@@ -240,6 +229,13 @@ function handleDrop(event) {
     openBasketBtn.classList.remove('animate__animated', 'animate__tada');
 }
 
+function calculateTotalPrice() {
+    let totalPrice = 0
+    productsInUserBasket.forEach(product => totalPrice += product.numberOfProduct * product.price);
+    console.log(totalPrice);
+    totalPriceElement.innerHTML = totalPrice.toLocaleString('en-US');
+}
+
 function needsToOperate(productID) {
     chosenProductInWarehouse = productsWarehouse.find(product => product.id == productID);
     theProductChosenToOperate = productsInUserBasket.find(product => product.id == productID);
@@ -248,6 +244,13 @@ function needsToOperate(productID) {
 
 const increaseProductCounter = () => productsCounter.innerHTML = Number(productsCounter.innerHTML) + 1
 const decreaseProductCounter = () => productsCounter.innerHTML = Number(productsCounter.innerHTML) - 1
+
+function notify(message, color) {
+    openModal(notification)
+    notification.innerHTML = message;
+    notification.style.backgroundColor = color;
+    setTimeout(() => closeModal(notification), 1500);
+}
 
 const openModal = element => element.style.top = "35px"
 const closeModal = element => element.style.top = "-1000px"
