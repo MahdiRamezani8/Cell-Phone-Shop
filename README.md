@@ -13,4 +13,5 @@ it's a cell phone shop
   * add and remove product from basket
   * add product to basket by drag and drop
   * notification
-  * desing 
+
+
